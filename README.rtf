@@ -1,0 +1,175 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Courier New;}{\f1\fnil\fcharset2 Symbol;}}
+{\colortbl ;\red0\green0\blue255;}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\f0\fs22\lang1033 ## Automated ELK Stack Deployment\par
+\par
+The files in this repository were used to configure the network depicted below.\par
+\par
+![TODO: Update the path with the name of your diagram](Images/diagram_filename.png)\par
+\par
+These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the \b install-elk.yml\b0  file may be used to install only certain pieces of it, such as Filebeat.\par
+\par
+  - install-elk.yml _\par
+\tab ---\par
+- name: Configure Elk VM with Docker\par
+  hosts: 10.1.0.4\par
+  remote_user: azureuser\par
+  become: true\par
+  tasks:\par
+    # Use apt module\par
+    - name: Install docker.io\par
+      apt:\par
+        update_cache: yes\par
+        force_apt_get: yes\par
+        name: docker.io\par
+        state: present\par
+\par
+      # Use apt module\par
+    - name: Install python3-pip\par
+      apt:\par
+        force_apt_get: yes\par
+        name: python3-pip\par
+        state: present\par
+\par
+      # Use pip module (It will default to pip3)\par
+    - name: Install Docker module\par
+      pip:\par
+        name: docker\par
+        state: present\par
+\par
+    - name: Use more memory\par
+      sysctl:\par
+        name: vm.max_map_count\par
+        value: "262144"\par
+        state: present\par
+        reload: yes\par
+      # Use command module\par
+\par
+      # Use docker_container module\par
+    - name: download and launch a docker elk container\par
+      docker_container:\par
+        name: elk\par
+        image: sebp/elk:761\par
+        state: started\par
+        restart_policy: always\par
+      # Please list the ports that ELK runs on\par
+        published_ports:\par
+          - 5601:5601\par
+          - 9200:9200\par
+          - 5044:5044\par
+\par
+      # Use systemd module\par
+    - name: Enable service docker on boot\par
+      systemd:\par
+        name: docker\par
+        enabled: yes\par
+\par
+This document contains the following details:\par
+- Description of the Topologu\par
+- Access Policies\par
+- ELK Configuration\par
+  - Beats in Use\par
+  - Machines Being Monitored\par
+- How to Use the Ansible Build\par
+\par
+\par
+### Description of the Topology\par
+\par
+The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.\par
+\par
+Load balancing ensures that the application will be highly \b avialble\b0 , in addition to restricting \b access \b0 to the network.\par
+- _TODO: A load balancer provides a website with an external IP that is accessed from the internet. \b Load balancers receive traffic that comes to the website and distributes the traffic across many servers. The distribution of the traffic mitigates the possibility of a DoS attack. A jump box is a gateway used to monitor traffic. Using the jump box as a gateway router between VMs forces all traffic through a single node which make it easier to monitor and secure traffic.\par
+\b0\par
+Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the \b logs\b0  and system \b network\b0 .\par
+- _TODO: What does Filebeat watch for? \b Data about the file system\b0\par
+- _TODO: What does Metricbeat record? \b Machine metrics\b0\par
+\par
+The configuration details of each machine may be found below.\par
+_Note: Use the [Markdown Table Generator]({{\field{\*\fldinst{HYPERLINK http://www.tablesgenerator.com/markdown_tables }}{\fldrslt{http://www.tablesgenerator.com/markdown_tables\ul0\cf0}}}}\f0\fs22 ) to add/remove values from the table_.\par
+\par
+| Name     | Function | IP Address | Operating System |\par
+|----------|----------|------------|------------------|\par
+| Jump Box | Gateway  | 10.0.0.4   | Linux            |\par
+| Elk      |Elk server| 10.1.0.4   | Linux            |\par
+| Web1     |VMw/docker| 10.0.0.5   | Linux            |\par
+| Web2     |VMw/docker| 10.0.06    | Linux                 |\par
+\par
+### Access Policies\par
+\par
+The machines on the internal network are not exposed to the public Internet. \par
+\par
+Only the \b Jump-box\b0  machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:\par
+- _TODO: \b 138.91.124.59\b0\par
+\par
+Machines within the network can only be accessed by \b SSH\b0 .\par
+- _TODO: Which machine did you allow to access your ELK VM? What was its IP address? \b Web1:10.0.0.5 and Web2: 10.0.0.6\b0\par
+\par
+A summary of the access policies in place can be found in the table below.\par
+\par
+| Name     | Publicly Accessible | Allowed IP Addresses |\par
+|----------|---------------------|----------------------|\par
+| Jump Box | Yes                 | 10.0.0.4             |\par
+| Elk      | No                  | 10.1.0.4             |\par
+| Web1     | No                  | 10.0.0.5                     |\par
+| Web2     | No                  | 10.0.0.6\par
+\par
+### Elk Configuration\par
+\par
+Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...\par
+- _TODO:\b  The auomation ansible provides allows IT admins a way to automate the mundane taks throughout their day. This allows them to focus on more important tasks which in turn delivers more value to the business.\b0\par
+\par
+The playbook implements the following tasks:\par
+- _TODO: \par
+
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\b Install docker.io\par
+{\pntext\f1\'B7\tab}Install python3-pip \par
+{\pntext\f1\'B7\tab}Install Docker module\par
+{\pntext\f1\'B7\tab}Upgrade memory\par
+{\pntext\f1\'B7\tab}Download and launch docker elk container\par
+{\pntext\f1\'B7\tab}Enable docker on boot\par
+
+\pard\b0\par
+The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.\par
+\par
+![TODO: Update the path with the name of your screenshot of docker ps output](\b https://docs.google.com/document/d/1hv-EM3zkgtW-39fxhCTYJTGvctSlDRz4vxAEpiWM-WI/edit?usp=sharing\b0 )\par
+\par
+### Target Machines & Beats\par
+This ELK server is configured to monitor the following machines:\par
+- _TODO: \b Web1: 10.0.0.5\par
+\tab     Web2: 10.0.06\par
+\b0\par
+We have installed the following Beats on these machines:\par
+- _TODO: \b Filebeat\par
+\b0\par
+These Beats allow us to collect the following information from each machine:\par
+- _TODO: \b Filebeat collects data about the file system. So for example you can use keystore to "encrypt" passwords.\par
+\b0\par
+### Using the Playbook\par
+In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: \par
+\par
+SSH into the control node and follow the steps below:\par
+- Copy the \b my-playbook.yml\b0  file to \b install-elk.yml\b0\par
+- Update the \b install-elk.yml\b0  file to include the \b elk container image with this command:  # Use docker_container module\par
+    - name: download and launch a docker elk container\par
+      docker_container:\par
+        name: elk\par
+        image: sebp/elk:761\par
+        state: started\par
+        restart_policy: always\par
+      # Please list the ports that ELK runs on\par
+        published_ports:\par
+          - 5601:5601\par
+          - 9200:9200\par
+          - 5044:5044\par
+\b0\par
+- Run the playbook, and navigate to you \b ansible container\b0  to check that the installation worked as expected.\par
+\par
+_TODO: Answer the following questions to fill in the blanks:_\par
+- _Which file is the playbook? \b my-playbook.yml\b0  Where do you copy it? \b install-elk.yml\par
+\b0\par
+- _Which file do you update to make Ansible run the playbook on a specific machine? \b filebeat-playbook.yml\b0  How do I specify which machine to install the ELK server on versus which to install Filebeat on? \b in the hosts.yml file\b0\par
+- _Which URL do you navigate to in order to check that the ELK server is running? {{\field{\*\fldinst{HYPERLINK http://13.66.212.223:5601/app/kibana#/home }}{\fldrslt{http://13.66.212.223:5601/app/kibana#/home\ul0\cf0}}}}\f0\fs22\par
+\par
+_As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._\par
+}
+ 
