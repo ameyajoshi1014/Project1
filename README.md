@@ -1,4 +1,6 @@
-## Automated ELK Stack Deployment
+# Automated ELK Stack Deployment
+
+<b>by Ameya</b>
 
 The files in this repository were used to configure the network depicted below.
 
@@ -126,7 +128,7 @@ The playbook implements the following tasks:
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
-![TODO: Update the path with the name of your screenshot of docker ps output](https://docs.google.com/document/d/1hv-EM3zkgtW-39fxhCTYJTGvctSlDRz4vxAEpiWM-WI/edit?usp=sharing)
+![Docker ps](Elkdockersuccessful.png)
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
